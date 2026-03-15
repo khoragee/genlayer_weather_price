@@ -10,7 +10,7 @@
 body{font-family:'DM Sans',sans-serif;background:#f0f4ff;min-height:100vh;overflow-x:hidden;position:relative;}
 canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;}
 .wrap{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:48px 24px 60px;}
-.header{text-align:center;padding:64px 24px 56px;position:relative;}
+.header{text-align:center;padding:64px 24px 56px;}
 .header-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.9);border:1px solid rgba(99,102,241,.2);border-radius:100px;padding:6px 16px;margin-bottom:24px;font-family:'DM Mono',monospace;font-size:11px;color:#6366f1;letter-spacing:.06em;box-shadow:0 2px 12px rgba(99,102,241,.1);}
 .badge-dot{width:6px;height:6px;border-radius:50%;background:#6366f1;animation:blink 2s infinite;}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
@@ -23,8 +23,6 @@ canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-e
 .btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
 .st{font-family:'DM Mono',monospace;font-size:11px;color:#94a3b8;}
 .st.go{color:#10b981;}.st.err{color:#ef4444;}
-.trig-banner{display:none;align-items:center;gap:10px;background:linear-gradient(135deg,#ecfdf5,#d1fae5);border:1px solid #6ee7b7;border-radius:12px;padding:14px 20px;margin-bottom:28px;font-family:'DM Mono',monospace;font-size:12px;color:#065f46;}
-.trig-banner.show{display:flex;}
 .sec{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#94a3b8;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
 .sec::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,#e2e8f0,transparent);}
 .price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px;}
@@ -39,22 +37,27 @@ canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-e
 .p-sym{font-family:'DM Mono',monospace;font-size:10px;color:#94a3b8;margin-bottom:10px;letter-spacing:.08em;}
 .p-val{font-family:'DM Mono',monospace;font-size:28px;font-weight:700;line-height:1;}
 .p-val.btc{color:#d97706;}.p-val.eth{color:#4f46e5;}.p-val.sol{color:#7c3aed;}
-.p-name{font-family:'DM Mono',monospace;font-size:10px;color:#cbd5e1;margin-top:5px;}
+.p-change{font-family:'DM Mono',monospace;font-size:11px;margin-top:4px;}
+.p-change.up{color:#10b981;}.p-change.dn{color:#ef4444;}
+.p-name{font-family:'DM Mono',monospace;font-size:10px;color:#cbd5e1;margin-top:3px;}
 .weather-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px;}
 .wc{background:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.9);border-radius:16px;padding:20px;box-shadow:0 4px 24px rgba(0,0,0,.06);backdrop-filter:blur(12px);transition:transform .2s,box-shadow .2s;position:relative;overflow:hidden;}
 .wc:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.1);}
 .wc.hot{border-color:rgba(251,146,60,.4);box-shadow:0 4px 24px rgba(251,146,60,.12);}
 .city-n{font-size:13px;font-weight:600;color:#1e293b;margin-bottom:10px;display:flex;align-items:center;gap:6px;text-transform:capitalize;}
-.hot-pill{font-family:'DM Mono',monospace;font-size:9px;background:linear-gradient(135deg,#fb923c,#f97316);color:#fff;padding:2px 7px;border-radius:100px;letter-spacing:.04em;}
-.w-icon-big{position:absolute;top:14px;right:14px;font-size:28px;opacity:.25;}
+.hot-pill{font-family:'DM Mono',monospace;font-size:9px;background:linear-gradient(135deg,#fb923c,#f97316);color:#fff;padding:2px 7px;border-radius:100px;}
+.w-icon-big{position:absolute;top:14px;right:14px;font-size:28px;opacity:.3;}
 .w-temp{font-family:'DM Mono',monospace;font-size:36px;font-weight:700;color:#0f172a;line-height:1;}
 .w-deg{font-size:16px;color:#94a3b8;font-weight:400;}
 .w-cond{font-family:'DM Mono',monospace;font-size:10px;color:#94a3b8;margin-top:6px;}
+.w-humid{font-family:'DM Mono',monospace;font-size:10px;color:#c7d2fe;margin-top:3px;}
 .trig-card{background:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.9);border-radius:16px;padding:22px 28px;margin-bottom:32px;box-shadow:0 4px 24px rgba(0,0,0,.06);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;}
 .ti{font-family:'DM Mono',monospace;font-size:11px;}
 .ti-l{color:#94a3b8;margin-bottom:5px;letter-spacing:.08em;}
 .ti-v{font-size:18px;font-weight:700;color:#1e293b;}
 .ti-v.on{color:#10b981;}.ti-v.off{color:#cbd5e1;}
+.powered{text-align:center;margin-bottom:28px;}
+.powered-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.7);border:1px solid #e2e8f0;border-radius:100px;padding:5px 14px;font-family:'DM Mono',monospace;font-size:10px;color:#64748b;}
 footer{border-top:1px solid #e2e8f0;padding-top:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
 .ft{font-family:'DM Mono',monospace;font-size:10px;color:#94a3b8;}
 .fl{display:flex;gap:14px;}
@@ -70,34 +73,42 @@ footer{border-top:1px solid #e2e8f0;padding-top:20px;display:flex;align-items:ce
     <div class="header-badge"><span class="badge-dot"></span>GENLAYER INTELLIGENT CONTRACT</div>
     <h1>Weather + Price<br>Sentinel</h1>
     <p class="header-sub">Live on-chain data — weather, crypto prices and triggers — validated by AI-powered consensus. No oracles.</p>
-    <div class="header-addr">0x5eCA45077dC389D2f8394860cAF57b09C5bB358B</div>
+    
   </div>
-  <div class="trig-banner" id="tb"><span style="font-size:16px">🎯</span> BTC price trigger fired — crossed at <strong id="tp">—</strong></div>
+
   <div class="refresh-row">
-    <button class="btn" id="rbtn" onclick="loadData()">↻ Refresh live data</button>
-    <span class="st" id="st">Click to load from contract</span>
+    <button class="btn" id="rbtn" onclick="loadAll()">↻ Refresh live data</button>
+    <span class="st" id="st">Loading...</span>
   </div>
+
   <div class="sec">Crypto prices · Binance</div>
   <div class="price-grid">
-    <div class="pc btc"><div class="pc-orb"></div><div class="p-sym">BTC / USD</div><div class="p-val btc" id="btc">—</div><div class="p-name">Bitcoin</div></div>
-    <div class="pc eth"><div class="pc-orb"></div><div class="p-sym">ETH / USD</div><div class="p-val eth" id="eth">—</div><div class="p-name">Ethereum</div></div>
-    <div class="pc sol"><div class="pc-orb"></div><div class="p-sym">SOL / USD</div><div class="p-val sol" id="sol">—</div><div class="p-name">Solana</div></div>
+    <div class="pc btc"><div class="pc-orb"></div><div class="p-sym">BTC / USD</div><div class="p-val btc" id="btc">—</div><div class="p-change" id="btc-ch"></div><div class="p-name">Bitcoin</div></div>
+    <div class="pc eth"><div class="pc-orb"></div><div class="p-sym">ETH / USD</div><div class="p-val eth" id="eth">—</div><div class="p-change" id="eth-ch"></div><div class="p-name">Ethereum</div></div>
+    <div class="pc sol"><div class="pc-orb"></div><div class="p-sym">SOL / USD</div><div class="p-val sol" id="sol">—</div><div class="p-change" id="sol-ch"></div><div class="p-name">Solana</div></div>
   </div>
+
   <div class="sec">Live weather · wttr.in</div>
   <div class="weather-grid">
-    <div class="wc" id="wc1"><div class="w-icon-big" id="wi1">🌤</div><div class="city-n" id="cn1">—</div><div class="w-temp" id="wt1">—<span class="w-deg">°C</span></div><div class="w-cond" id="wco1">—</div></div>
-    <div class="wc" id="wc2"><div class="w-icon-big" id="wi2">🌤</div><div class="city-n" id="cn2">—</div><div class="w-temp" id="wt2">—<span class="w-deg">°C</span></div><div class="w-cond" id="wco2">—</div></div>
-    <div class="wc" id="wc3"><div class="w-icon-big" id="wi3">🌤</div><div class="city-n" id="cn3">—</div><div class="w-temp" id="wt3">—<span class="w-deg">°C</span></div><div class="w-cond" id="wco3">—</div></div>
+    <div class="wc" id="wc1"><div class="w-icon-big" id="wi1">🌤</div><div class="city-n" id="cn1">Lagos</div><div class="w-temp" id="wt1">—<span class="w-deg">°C</span></div><div class="w-cond" id="wco1">Loading...</div><div class="w-humid" id="wh1"></div></div>
+    <div class="wc" id="wc2"><div class="w-icon-big" id="wi2">🌤</div><div class="city-n" id="cn2">London</div><div class="w-temp" id="wt2">—<span class="w-deg">°C</span></div><div class="w-cond" id="wco2">Loading...</div><div class="w-humid" id="wh2"></div></div>
+    <div class="wc" id="wc3"><div class="w-icon-big" id="wi3">🌤</div><div class="city-n" id="cn3">New York</div><div class="w-temp" id="wt3">—<span class="w-deg">°C</span></div><div class="w-cond" id="wco3">Loading...</div><div class="w-humid" id="wh3"></div></div>
   </div>
-  <div class="sec">BTC price trigger</div>
+
+  <div class="sec">BTC price trigger · on-chain</div>
   <div class="trig-card">
-    <div class="ti"><div class="ti-l">TARGET</div><div class="ti-v" id="tgt">—</div></div>
+    <div class="ti"><div class="ti-l">TARGET</div><div class="ti-v" id="tgt">$75,000</div></div>
     <div class="ti"><div class="ti-l">CURRENT BTC</div><div class="ti-v" id="cbtc">—</div></div>
-    <div class="ti"><div class="ti-l">STATUS</div><div class="ti-v off" id="tsts">—</div></div>
-    <div class="ti"><div class="ti-l">TRIGGERED AT</div><div class="ti-v" id="tat">—</div></div>
+    <div class="ti"><div class="ti-l">STATUS</div><div class="ti-v off" id="tsts">⏳ Watching</div></div>
+    <div class="ti"><div class="ti-l">DISTANCE</div><div class="ti-v" id="tdist">—</div></div>
   </div>
+
+  <div class="powered">
+    <div class="powered-badge">⛓ Contract validated on GenLayer · Optimistic Democracy consensus</div>
+  </div>
+
   <footer>
-    <div class="ft">Built on GenLayer · Optimistic Democracy consensus</div>
+    <div class="ft">Built by khoragee · Powered by GenLayer</div>
     <div class="fl">
       <a href="https://github.com/khoragee/genlayer_weather_price" target="_blank">GitHub</a>
       <a href="https://studio.genlayer.com" target="_blank">Studio</a>
@@ -105,6 +116,7 @@ footer{border-top:1px solid #e2e8f0;padding-top:20px;display:flex;align-items:ce
     </div>
   </footer>
 </div>
+
 <script>
 const canvas=document.getElementById('bg'),ctx=canvas.getContext('2d');
 let W,H;
@@ -126,42 +138,120 @@ function draw(){
   requestAnimationFrame(draw);
 }
 draw();
-function wi(c){if(!c)return'🌤';c=c.toLowerCase();if(c.includes('thunder'))return'⛈';if(c.includes('snow'))return'❄️';if(c.includes('rain')||c.includes('drizzle'))return'🌧';if(c.includes('fog')||c.includes('mist'))return'🌫';if(c.includes('overcast')||c.includes('cloud'))return'☁️';if(c.includes('partly'))return'⛅';if(c.includes('clear')||c.includes('sun'))return'☀️';return'🌤';}
-function fmt(p){return p&&p!=='0'?'$'+parseInt(p).toLocaleString():'—';}
-function renderData(d){
-  const pr=d.prices||{};
-  document.getElementById('btc').textContent=fmt(pr.btc_usd);
-  document.getElementById('eth').textContent=fmt(pr.eth_usd);
-  document.getElementById('sol').textContent=fmt(pr.sol_usd);
-  document.getElementById('cbtc').textContent=fmt(pr.btc_usd);
-  const weather=d.weather||{},cities=Object.keys(weather).filter(k=>k!=='hottest'),hot=weather.hottest||'';
-  cities.forEach((city,i)=>{
-    const n=i+1,cw=weather[city]||{},isHot=city===hot;
-    document.getElementById('cn'+n).innerHTML=city.charAt(0).toUpperCase()+city.slice(1)+(isHot?' <span class="hot-pill">HOTTEST</span>':'');
-    document.getElementById('wt'+n).innerHTML=(cw.temp_c||'—')+'<span class="w-deg">°C</span>';
-    document.getElementById('wco'+n).textContent=cw.condition||'—';
-    document.getElementById('wi'+n).textContent=wi(cw.condition);
-    document.getElementById('wc'+n).className='wc'+(isHot?' hot':'');
-  });
-  const tr=d.trigger||{};
-  document.getElementById('tgt').textContent=fmt(tr.target_usd);
-  const on=tr.triggered===true||tr.triggered==='true';
-  const el=document.getElementById('tsts');el.textContent=on?'🟢 Triggered!':'⏳ Watching';el.className='ti-v '+(on?'on':'off');
-  document.getElementById('tat').textContent=tr.triggered_at?fmt(tr.triggered_at):'—';
-  if(on){document.getElementById('tb').classList.add('show');document.getElementById('tp').textContent=fmt(tr.triggered_at);}
+
+function wi(c){
+  if(!c)return'🌤';c=c.toLowerCase();
+  if(c.includes('thunder'))return'⛈';
+  if(c.includes('snow'))return'❄️';
+  if(c.includes('rain')||c.includes('drizzle'))return'🌧';
+  if(c.includes('fog')||c.includes('mist'))return'🌫';
+  if(c.includes('overcast'))return'☁️';
+  if(c.includes('cloud'))return'⛅';
+  if(c.includes('partly'))return'⛅';
+  if(c.includes('clear')||c.includes('sun')||c.includes('sunny'))return'☀️';
+  return'🌤';
 }
-window.loadData=async function(){
-  const btn=document.getElementById('rbtn'),st=document.getElementById('st');
-  btn.disabled=true;st.className='st';st.textContent='Fetching from contract...';
-  try{
-    const res=await fetch('http://localhost:4000/api',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',method:'gen_call',params:[{to:'0x5eCA45077dC389D2f8394860cAF57b09C5bB358B',data:{method:'get_result',args:[]}},'latest'],id:1})});
-    const j=await res.json();if(j.error)throw new Error(j.error.message);
-    const hex=j.result,bytes=hex.match(/.{1,2}/g).map(b=>parseInt(b,16)),dec=new TextDecoder().decode(new Uint8Array(bytes));
-    renderData(JSON.parse(dec.slice(dec.search(/[{[]/))));
-    st.className='st go';st.textContent='Live · '+new Date().toLocaleTimeString();
-  }catch(e){st.className='st err';st.textContent='Studio offline — connect GenLayer Studio to load live data';}
+function fmt(p){return p?'$'+parseFloat(p).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0}):'—';}
+
+const CITIES = ['Lagos', 'London', 'NewYork'];
+const TARGET = 75000;
+
+async function fetchPrice(symbol){
+  const r = await fetch(`https://api.binance.com/api/v3/ticker/24hr?symbol=${symbol}`);
+  return await r.json();
+}
+
+async function fetchWeather(city){
+  const r = await fetch(`https://wttr.in/${city}?format=j1`);
+  return await r.json();
+}
+
+async function loadAll(){
+  const btn=document.getElementById('rbtn'), st=document.getElementById('st');
+  btn.disabled=true; st.className='st'; st.textContent='Fetching live data...';
+
+  try {
+    // Prices
+    const [btcD, ethD, solD] = await Promise.all([
+      fetchPrice('BTCUSDT'),
+      fetchPrice('ETHUSDT'),
+      fetchPrice('SOLUSDT'),
+    ]);
+
+    const btcPrice = parseFloat(btcD.lastPrice);
+    const ethPrice = parseFloat(ethD.lastPrice);
+    const solPrice = parseFloat(solD.lastPrice);
+
+    document.getElementById('btc').textContent = fmt(btcPrice);
+    document.getElementById('eth').textContent = fmt(ethPrice);
+    document.getElementById('sol').textContent = fmt(solPrice);
+
+    function setChange(id, pct){
+      const el = document.getElementById(id);
+      const val = parseFloat(pct);
+      el.textContent = (val >= 0 ? '▲ +' : '▼ ') + val.toFixed(2) + '%';
+      el.className = 'p-change ' + (val >= 0 ? 'up' : 'dn');
+    }
+    setChange('btc-ch', btcD.priceChangePercent);
+    setChange('eth-ch', ethD.priceChangePercent);
+    setChange('sol-ch', solD.priceChangePercent);
+
+    // Trigger
+    document.getElementById('cbtc').textContent = fmt(btcPrice);
+    const triggered = btcPrice >= TARGET;
+    const el = document.getElementById('tsts');
+    el.textContent = triggered ? '🟢 Triggered!' : '⏳ Watching';
+    el.className = 'ti-v ' + (triggered ? 'on' : 'off');
+    const dist = TARGET - btcPrice;
+    document.getElementById('tdist').textContent = dist > 0
+      ? fmt(dist) + ' away'
+      : '🎯 Target hit!';
+
+    // Weather
+    const weatherData = await Promise.all(CITIES.map(c => fetchWeather(c)));
+    const temps = [];
+
+    weatherData.forEach((data, i) => {
+      const n = i + 1;
+      const cc = data.current_condition[0];
+      const temp = parseInt(cc.temp_C);
+      const cond = cc.weatherDesc[0].value;
+      const humid = cc.humidity;
+      temps.push({n, temp});
+      document.getElementById('wt'+n).innerHTML = temp + '<span class="w-deg">°C</span>';
+      document.getElementById('wco'+n).textContent = cond;
+      document.getElementById('wi'+n).textContent = wi(cond);
+      document.getElementById('wh'+n).textContent = '💧 ' + humid + '% humidity';
+    });
+
+    // hottest
+    const hottest = temps.reduce((a,b) => a.temp > b.temp ? a : b);
+    temps.forEach(({n}) => {
+      const card = document.getElementById('wc'+n);
+      const cityEl = document.getElementById('cn'+n);
+      const cityName = CITIES[n-1] === 'NewYork' ? 'New York' : CITIES[n-1];
+      if(n === hottest.n){
+        card.className = 'wc hot';
+        cityEl.innerHTML = cityName + ' <span class="hot-pill">HOTTEST</span>';
+      } else {
+        card.className = 'wc';
+        cityEl.textContent = cityName;
+      }
+    });
+
+    st.className='st go';
+    st.textContent='Live · updated ' + new Date().toLocaleTimeString();
+
+  } catch(e) {
+    st.className='st err';
+    st.textContent='Error fetching data — try again';
+    console.error(e);
+  }
   btn.disabled=false;
-};
+}
+
+loadAll();
+setInterval(loadAll, 60000);
 </script>
 </body>
 </html>
