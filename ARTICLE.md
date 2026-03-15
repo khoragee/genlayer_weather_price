@@ -153,7 +153,7 @@ In my testing, the weather data reached consensus easily. The BTC price required
 4. Deploy with your chosen cities and BTC target
 5. Call `evaluate()` and watch live data appear on-chain
 
-The full contract code is on GitHub: **[link to your repo]**
+The full contract code is on GitHub: **[https://github.com/khoragee/genlayer_weather_price]**
 
 ---
 
@@ -174,5 +174,5 @@ I'm building a frontend next so anyone can interact with the contract without to
 
 *Built with GenLayer Studio · wttr.in · Binance Public API · Python*
 
-*GitHub: [your repo link]*
-*Twitter/X: [your handle]*
+*GitHub: [https://github.com/khoragee/genlayer_weather_price]*
+*Twitter/X: [https://x.com/khorr_age?s=20]*
