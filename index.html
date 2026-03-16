@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'DM Sans',sans-serif;background:#f0f4ff;min-height:100vh;overflow-x:hidden;position:relative;}
+body{font-family:'DM Sans',sans-serif;background:#f0f4ff;min-height:100vh;overflow-x:hidden;}
 canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;}
 .wrap{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:48px 24px 60px;}
 .header{text-align:center;padding:64px 24px 56px;}
@@ -16,7 +16,6 @@ canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-e
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
 .header h1{font-size:clamp(36px,6vw,64px);font-weight:700;line-height:1.05;background:linear-gradient(135deg,#1e1b4b 0%,#4f46e5 40%,#7c3aed 70%,#a855f7 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:16px;}
 .header-sub{font-size:16px;color:#64748b;max-width:480px;margin:0 auto 20px;line-height:1.6;}
-.header-addr{font-family:'DM Mono',monospace;font-size:11px;color:#94a3b8;background:rgba(255,255,255,.7);padding:6px 14px;border-radius:8px;display:inline-block;border:1px solid #e2e8f0;}
 .refresh-row{display:flex;justify-content:center;align-items:center;gap:12px;margin-bottom:40px;}
 .btn{font-family:'DM Mono',monospace;font-size:12px;padding:10px 22px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;border-radius:10px;cursor:pointer;letter-spacing:.06em;box-shadow:0 4px 14px rgba(99,102,241,.35);transition:transform .15s,box-shadow .15s;}
 .btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(99,102,241,.45);}
@@ -26,7 +25,7 @@ canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-e
 .sec{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#94a3b8;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
 .sec::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,#e2e8f0,transparent);}
 .price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px;}
-.pc{background:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.9);border-radius:16px;padding:20px;box-shadow:0 4px 24px rgba(0,0,0,.06),0 1px 4px rgba(0,0,0,.04);backdrop-filter:blur(12px);transition:transform .2s,box-shadow .2s;position:relative;overflow:hidden;}
+.pc{background:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.9);border-radius:16px;padding:20px;box-shadow:0 4px 24px rgba(0,0,0,.06);backdrop-filter:blur(12px);transition:transform .2s,box-shadow .2s;position:relative;overflow:hidden;}
 .pc:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.1);}
 .pc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:16px 16px 0 0;}
 .pc.btc::before{background:linear-gradient(90deg,#f7931a,#fbbf24);}
@@ -44,7 +43,7 @@ canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-e
 .wc{background:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.9);border-radius:16px;padding:20px;box-shadow:0 4px 24px rgba(0,0,0,.06);backdrop-filter:blur(12px);transition:transform .2s,box-shadow .2s;position:relative;overflow:hidden;}
 .wc:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.1);}
 .wc.hot{border-color:rgba(251,146,60,.4);box-shadow:0 4px 24px rgba(251,146,60,.12);}
-.city-n{font-size:13px;font-weight:600;color:#1e293b;margin-bottom:10px;display:flex;align-items:center;gap:6px;text-transform:capitalize;}
+.city-n{font-size:13px;font-weight:600;color:#1e293b;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
 .hot-pill{font-family:'DM Mono',monospace;font-size:9px;background:linear-gradient(135deg,#fb923c,#f97316);color:#fff;padding:2px 7px;border-radius:100px;}
 .w-icon-big{position:absolute;top:14px;right:14px;font-size:28px;opacity:.3;}
 .w-temp{font-family:'DM Mono',monospace;font-size:36px;font-weight:700;color:#0f172a;line-height:1;}
@@ -56,8 +55,6 @@ canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-e
 .ti-l{color:#94a3b8;margin-bottom:5px;letter-spacing:.08em;}
 .ti-v{font-size:18px;font-weight:700;color:#1e293b;}
 .ti-v.on{color:#10b981;}.ti-v.off{color:#cbd5e1;}
-.powered{text-align:center;margin-bottom:28px;}
-.powered-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.7);border:1px solid #e2e8f0;border-radius:100px;padding:5px 14px;font-family:'DM Mono',monospace;font-size:10px;color:#64748b;}
 footer{border-top:1px solid #e2e8f0;padding-top:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
 .ft{font-family:'DM Mono',monospace;font-size:10px;color:#94a3b8;}
 .fl{display:flex;gap:14px;}
@@ -73,7 +70,6 @@ footer{border-top:1px solid #e2e8f0;padding-top:20px;display:flex;align-items:ce
     <div class="header-badge"><span class="badge-dot"></span>GENLAYER INTELLIGENT CONTRACT</div>
     <h1>Weather + Price<br>Sentinel</h1>
     <p class="header-sub">Live on-chain data — weather, crypto prices and triggers — validated by AI-powered consensus. No oracles.</p>
-    
   </div>
 
   <div class="refresh-row">
@@ -81,7 +77,7 @@ footer{border-top:1px solid #e2e8f0;padding-top:20px;display:flex;align-items:ce
     <span class="st" id="st">Loading...</span>
   </div>
 
-  <div class="sec">Crypto prices · Binance</div>
+  <div class="sec">Crypto prices · CoinGecko</div>
   <div class="price-grid">
     <div class="pc btc"><div class="pc-orb"></div><div class="p-sym">BTC / USD</div><div class="p-val btc" id="btc">—</div><div class="p-change" id="btc-ch"></div><div class="p-name">Bitcoin</div></div>
     <div class="pc eth"><div class="pc-orb"></div><div class="p-sym">ETH / USD</div><div class="p-val eth" id="eth">—</div><div class="p-change" id="eth-ch"></div><div class="p-name">Ethereum</div></div>
@@ -103,10 +99,6 @@ footer{border-top:1px solid #e2e8f0;padding-top:20px;display:flex;align-items:ce
     <div class="ti"><div class="ti-l">DISTANCE</div><div class="ti-v" id="tdist">—</div></div>
   </div>
 
-  <div class="powered">
-    <div class="powered-badge">⛓ Contract validated on GenLayer · Optimistic Democracy consensus</div>
-  </div>
-
   <footer>
     <div class="ft">Built by khoragee · Powered by GenLayer</div>
     <div class="fl">
@@ -118,136 +110,139 @@ footer{border-top:1px solid #e2e8f0;padding-top:20px;display:flex;align-items:ce
 </div>
 
 <script>
-const canvas=document.getElementById('bg'),ctx=canvas.getContext('2d');
-let W,H;
-function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
-resize();window.addEventListener('resize',resize);
-const palette=['#e0e7ff','#c7d2fe','#ddd6fe','#ede9fe','#f0f9ff','#e0f2fe'];
-const particles=Array.from({length:60},()=>({x:Math.random(),y:Math.random(),r:Math.random()*120+40,c:palette[Math.floor(Math.random()*palette.length)],vx:(Math.random()-.5)*.0002,vy:(Math.random()-.5)*.0001,a:Math.random()*.35+.1}));
-function draw(){
+const canvas = document.getElementById('bg'), ctx = canvas.getContext('2d');
+let W, H;
+function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+resize(); window.addEventListener('resize', resize);
+const palette = ['#e0e7ff','#c7d2fe','#ddd6fe','#ede9fe','#f0f9ff','#e0f2fe'];
+const particles = Array.from({length:60}, () => ({
+  x: Math.random(), y: Math.random(),
+  r: Math.random()*120+40,
+  c: palette[Math.floor(Math.random()*palette.length)],
+  vx: (Math.random()-.5)*.0002, vy: (Math.random()-.5)*.0001,
+  a: Math.random()*.35+.1
+}));
+function draw() {
   resize();
-  ctx.fillStyle='#f0f4ff';ctx.fillRect(0,0,W,H);
-  particles.forEach(p=>{
-    p.x+=p.vx;p.y+=p.vy;
-    if(p.x<0)p.x=1;if(p.x>1)p.x=0;if(p.y<0)p.y=1;if(p.y>1)p.y=0;
-    const g=ctx.createRadialGradient(p.x*W,p.y*H,0,p.x*W,p.y*H,p.r);
-    g.addColorStop(0,p.c+Math.round(p.a*255).toString(16).padStart(2,'0'));
-    g.addColorStop(1,p.c+'00');
-    ctx.beginPath();ctx.arc(p.x*W,p.y*H,p.r,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
+  ctx.fillStyle = '#f0f4ff'; ctx.fillRect(0,0,W,H);
+  particles.forEach(p => {
+    p.x += p.vx; p.y += p.vy;
+    if(p.x<0)p.x=1; if(p.x>1)p.x=0; if(p.y<0)p.y=1; if(p.y>1)p.y=0;
+    const g = ctx.createRadialGradient(p.x*W,p.y*H,0,p.x*W,p.y*H,p.r);
+    g.addColorStop(0, p.c + Math.round(p.a*255).toString(16).padStart(2,'0'));
+    g.addColorStop(1, p.c + '00');
+    ctx.beginPath(); ctx.arc(p.x*W,p.y*H,p.r,0,Math.PI*2);
+    ctx.fillStyle = g; ctx.fill();
   });
   requestAnimationFrame(draw);
 }
 draw();
 
-function wi(c){
-  if(!c)return'🌤';c=c.toLowerCase();
-  if(c.includes('thunder'))return'⛈';
-  if(c.includes('snow'))return'❄️';
-  if(c.includes('rain')||c.includes('drizzle'))return'🌧';
-  if(c.includes('fog')||c.includes('mist'))return'🌫';
-  if(c.includes('overcast'))return'☁️';
-  if(c.includes('cloud'))return'⛅';
-  if(c.includes('partly'))return'⛅';
-  if(c.includes('clear')||c.includes('sun')||c.includes('sunny'))return'☀️';
-  return'🌤';
+function wi(c) {
+  if(!c) return '🌤'; c = c.toLowerCase();
+  if(c.includes('thunder')) return '⛈';
+  if(c.includes('snow')) return '❄️';
+  if(c.includes('rain')||c.includes('drizzle')) return '🌧';
+  if(c.includes('fog')||c.includes('mist')) return '🌫';
+  if(c.includes('overcast')) return '☁️';
+  if(c.includes('cloud')||c.includes('partly')) return '⛅';
+  if(c.includes('clear')||c.includes('sun')) return '☀️';
+  return '🌤';
 }
-function fmt(p){return p?'$'+parseFloat(p).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0}):'—';}
 
-const CITIES = ['Lagos', 'London', 'NewYork'];
+function fmt(p) {
+  return '$' + parseFloat(p).toLocaleString('en-US', {minimumFractionDigits:0, maximumFractionDigits:0});
+}
+
+function setChange(id, pct) {
+  const el = document.getElementById(id);
+  const val = parseFloat(pct);
+  el.textContent = (val >= 0 ? '▲ +' : '▼ ') + Math.abs(val).toFixed(2) + '%';
+  el.className = 'p-change ' + (val >= 0 ? 'up' : 'dn');
+}
+
 const TARGET = 75000;
+const CITIES = ['Lagos', 'London', 'New+York'];
+const CITY_NAMES = ['Lagos', 'London', 'New York'];
 
-async function fetchPrice(symbol){
-  const r = await fetch(`https://api.binance.com/api/v3/ticker/24hr?symbol=${symbol}`);
-  return await r.json();
-}
-
-async function fetchWeather(city){
-  const r = await fetch(`https://wttr.in/${city}?format=j1`);
-  return await r.json();
-}
-
-async function loadAll(){
-  const btn=document.getElementById('rbtn'), st=document.getElementById('st');
-  btn.disabled=true; st.className='st'; st.textContent='Fetching live data...';
+async function loadAll() {
+  const btn = document.getElementById('rbtn');
+  const st = document.getElementById('st');
+  btn.disabled = true;
+  st.className = 'st';
+  st.textContent = 'Fetching live data...';
 
   try {
-    // Prices
-    const [btcD, ethD, solD] = await Promise.all([
-      fetchPrice('BTCUSDT'),
-      fetchPrice('ETHUSDT'),
-      fetchPrice('SOLUSDT'),
-    ]);
+    // Fetch prices from CoinGecko (CORS friendly)
+    const priceRes = await fetch(
+      'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,solana&order=market_cap_desc&sparkline=false&price_change_percentage=24h'
+    );
+    const prices = await priceRes.json();
+    const btcD = prices.find(p => p.id === 'bitcoin');
+    const ethD = prices.find(p => p.id === 'ethereum');
+    const solD = prices.find(p => p.id === 'solana');
 
-    const btcPrice = parseFloat(btcD.lastPrice);
-    const ethPrice = parseFloat(ethD.lastPrice);
-    const solPrice = parseFloat(solD.lastPrice);
-
-    document.getElementById('btc').textContent = fmt(btcPrice);
-    document.getElementById('eth').textContent = fmt(ethPrice);
-    document.getElementById('sol').textContent = fmt(solPrice);
-
-    function setChange(id, pct){
-      const el = document.getElementById(id);
-      const val = parseFloat(pct);
-      el.textContent = (val >= 0 ? '▲ +' : '▼ ') + val.toFixed(2) + '%';
-      el.className = 'p-change ' + (val >= 0 ? 'up' : 'dn');
-    }
-    setChange('btc-ch', btcD.priceChangePercent);
-    setChange('eth-ch', ethD.priceChangePercent);
-    setChange('sol-ch', solD.priceChangePercent);
+    document.getElementById('btc').textContent = fmt(btcD.current_price);
+    document.getElementById('eth').textContent = fmt(ethD.current_price);
+    document.getElementById('sol').textContent = fmt(solD.current_price);
+    setChange('btc-ch', btcD.price_change_percentage_24h);
+    setChange('eth-ch', ethD.price_change_percentage_24h);
+    setChange('sol-ch', solD.price_change_percentage_24h);
 
     // Trigger
+    const btcPrice = btcD.current_price;
     document.getElementById('cbtc').textContent = fmt(btcPrice);
     const triggered = btcPrice >= TARGET;
-    const el = document.getElementById('tsts');
-    el.textContent = triggered ? '🟢 Triggered!' : '⏳ Watching';
-    el.className = 'ti-v ' + (triggered ? 'on' : 'off');
+    const tEl = document.getElementById('tsts');
+    tEl.textContent = triggered ? '🟢 Triggered!' : '⏳ Watching';
+    tEl.className = 'ti-v ' + (triggered ? 'on' : 'off');
     const dist = TARGET - btcPrice;
-    document.getElementById('tdist').textContent = dist > 0
-      ? fmt(dist) + ' away'
-      : '🎯 Target hit!';
+    document.getElementById('tdist').textContent = dist > 0 ? fmt(dist) + ' away' : '🎯 Target hit!';
 
-    // Weather
-    const weatherData = await Promise.all(CITIES.map(c => fetchWeather(c)));
+    // Fetch weather for each city
+    const weatherResults = await Promise.all(
+      CITIES.map(city =>
+        fetch(`https://wttr.in/${city}?format=j1`).then(r => r.json())
+      )
+    );
+
     const temps = [];
-
-    weatherData.forEach((data, i) => {
+    weatherResults.forEach((data, i) => {
       const n = i + 1;
       const cc = data.current_condition[0];
       const temp = parseInt(cc.temp_C);
       const cond = cc.weatherDesc[0].value;
       const humid = cc.humidity;
       temps.push({n, temp});
-      document.getElementById('wt'+n).innerHTML = temp + '<span class="w-deg">°C</span>';
-      document.getElementById('wco'+n).textContent = cond;
-      document.getElementById('wi'+n).textContent = wi(cond);
-      document.getElementById('wh'+n).textContent = '💧 ' + humid + '% humidity';
+      document.getElementById('wt' + n).innerHTML = temp + '<span class="w-deg">°C</span>';
+      document.getElementById('wco' + n).textContent = cond;
+      document.getElementById('wi' + n).textContent = wi(cond);
+      document.getElementById('wh' + n).textContent = '💧 ' + humid + '% humidity';
     });
 
-    // hottest
-    const hottest = temps.reduce((a,b) => a.temp > b.temp ? a : b);
+    // Mark hottest city
+    const hottest = temps.reduce((a, b) => a.temp > b.temp ? a : b);
     temps.forEach(({n}) => {
-      const card = document.getElementById('wc'+n);
-      const cityEl = document.getElementById('cn'+n);
-      const cityName = CITIES[n-1] === 'NewYork' ? 'New York' : CITIES[n-1];
-      if(n === hottest.n){
+      const card = document.getElementById('wc' + n);
+      const cityEl = document.getElementById('cn' + n);
+      if(n === hottest.n) {
         card.className = 'wc hot';
-        cityEl.innerHTML = cityName + ' <span class="hot-pill">HOTTEST</span>';
+        cityEl.innerHTML = CITY_NAMES[n-1] + ' <span class="hot-pill">HOTTEST</span>';
       } else {
         card.className = 'wc';
-        cityEl.textContent = cityName;
+        cityEl.textContent = CITY_NAMES[n-1];
       }
     });
 
-    st.className='st go';
-    st.textContent='Live · updated ' + new Date().toLocaleTimeString();
+    st.className = 'st go';
+    st.textContent = 'Live · ' + new Date().toLocaleTimeString();
 
   } catch(e) {
-    st.className='st err';
-    st.textContent='Error fetching data — try again';
+    st.className = 'st err';
+    st.textContent = 'Error — ' + e.message;
     console.error(e);
   }
-  btn.disabled=false;
+  btn.disabled = false;
 }
 
 loadAll();
