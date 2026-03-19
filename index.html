@@ -173,14 +173,24 @@ async function loadAll() {
   st.textContent = 'Fetching live data...';
 
   try {
-    // Fetch prices from CoinGecko (CORS friendly)
+    // Fetch prices from CoinGecko
     const priceRes = await fetch(
       'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,solana&order=market_cap_desc&sparkline=false&price_change_percentage=24h'
     );
     const prices = await priceRes.json();
+
+    // Guard: CoinGecko returns an error object (not array) when rate-limited
+    if (!Array.isArray(prices) || prices.length === 0) {
+      throw new Error('CoinGecko rate limited — try again in a moment');
+    }
+
     const btcD = prices.find(p => p.id === 'bitcoin');
     const ethD = prices.find(p => p.id === 'ethereum');
     const solD = prices.find(p => p.id === 'solana');
+
+    if (!btcD || !ethD || !solD) {
+      throw new Error('Missing price data from CoinGecko');
+    }
 
     document.getElementById('btc').textContent = fmt(btcD.current_price);
     document.getElementById('eth').textContent = fmt(ethD.current_price);
@@ -199,16 +209,31 @@ async function loadAll() {
     const dist = TARGET - btcPrice;
     document.getElementById('tdist').textContent = dist > 0 ? fmt(dist) + ' away' : '🎯 Target hit!';
 
-    // Fetch weather for each city
+    // Fetch weather — each city fails independently, won't crash the page
     const weatherResults = await Promise.all(
       CITIES.map(city =>
-        fetch(`https://wttr.in/${city}?format=j1`).then(r => r.json())
+        fetch(`https://wttr.in/${city}?format=j1`)
+          .then(r => {
+            if (!r.ok) throw new Error('HTTP ' + r.status);
+            return r.json();
+          })
+          .catch(() => null) // null = this city failed, show graceful fallback
       )
     );
 
     const temps = [];
     weatherResults.forEach((data, i) => {
       const n = i + 1;
+
+      // Guard: wttr.in failed or returned bad data for this city
+      if (!data || !data.current_condition || !data.current_condition.length) {
+        document.getElementById('wt' + n).innerHTML = '—<span class="w-deg">°C</span>';
+        document.getElementById('wco' + n).textContent = 'Unavailable';
+        document.getElementById('wh' + n).textContent = '';
+        temps.push({n, temp: -Infinity});
+        return;
+      }
+
       const cc = data.current_condition[0];
       const temp = parseInt(cc.temp_C);
       const cond = cc.weatherDesc[0].value;
@@ -220,12 +245,16 @@ async function loadAll() {
       document.getElementById('wh' + n).textContent = '💧 ' + humid + '% humidity';
     });
 
-    // Mark hottest city
-    const hottest = temps.reduce((a, b) => a.temp > b.temp ? a : b);
+    // Mark hottest city — only among cities with real data
+    const validTemps = temps.filter(t => t.temp !== -Infinity);
+    const hottest = validTemps.length > 0
+      ? validTemps.reduce((a, b) => a.temp > b.temp ? a : b)
+      : null;
+
     temps.forEach(({n}) => {
       const card = document.getElementById('wc' + n);
       const cityEl = document.getElementById('cn' + n);
-      if(n === hottest.n) {
+      if (hottest && n === hottest.n) {
         card.className = 'wc hot';
         cityEl.innerHTML = CITY_NAMES[n-1] + ' <span class="hot-pill">HOTTEST</span>';
       } else {
