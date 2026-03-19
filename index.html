@@ -84,7 +84,7 @@ footer{border-top:1px solid #e2e8f0;padding-top:20px;display:flex;align-items:ce
     <div class="pc sol"><div class="pc-orb"></div><div class="p-sym">SOL / USD</div><div class="p-val sol" id="sol">—</div><div class="p-change" id="sol-ch"></div><div class="p-name">Solana</div></div>
   </div>
 
-  <div class="sec">Live weather · wttr.in</div>
+  <div class="sec">Live weather · Open-Meteo</div>
   <div class="weather-grid">
     <div class="wc" id="wc1"><div class="w-icon-big" id="wi1">🌤</div><div class="city-n" id="cn1">Lagos</div><div class="w-temp" id="wt1">—<span class="w-deg">°C</span></div><div class="w-cond" id="wco1">Loading...</div><div class="w-humid" id="wh1"></div></div>
     <div class="wc" id="wc2"><div class="w-icon-big" id="wi2">🌤</div><div class="city-n" id="cn2">London</div><div class="w-temp" id="wt2">—<span class="w-deg">°C</span></div><div class="w-cond" id="wco2">Loading...</div><div class="w-humid" id="wh2"></div></div>
@@ -209,15 +209,32 @@ async function loadAll() {
     const dist = TARGET - btcPrice;
     document.getElementById('tdist').textContent = dist > 0 ? fmt(dist) + ' away' : '🎯 Target hit!';
 
-    // Fetch weather — each city fails independently, won't crash the page
+    // City coordinates for Open-Meteo (no CORS, no API key required)
+    const CITY_COORDS = [
+      { lat: 6.5244, lon: 3.3792 },   // Lagos
+      { lat: 51.5074, lon: -0.1278 },  // London
+      { lat: 40.7128, lon: -74.0060 }  // New York
+    ];
+
+    // WMO weather code to description + emoji
+    function wmoDesc(code) {
+      if (code === 0) return { desc: 'Clear sky', emoji: '☀️' };
+      if (code <= 2) return { desc: 'Partly cloudy', emoji: '⛅' };
+      if (code === 3) return { desc: 'Overcast', emoji: '☁️' };
+      if (code <= 49) return { desc: 'Foggy', emoji: '🌫' };
+      if (code <= 59) return { desc: 'Drizzle', emoji: '🌧' };
+      if (code <= 69) return { desc: 'Rain', emoji: '🌧' };
+      if (code <= 79) return { desc: 'Snow', emoji: '❄️' };
+      if (code <= 84) return { desc: 'Rain showers', emoji: '🌧' };
+      if (code <= 94) return { desc: 'Thunderstorm', emoji: '⛈' };
+      return { desc: 'Thunderstorm', emoji: '⛈' };
+    }
+
     const weatherResults = await Promise.all(
-      CITIES.map(city =>
-        fetch(`https://wttr.in/${city}?format=j1`)
-          .then(r => {
-            if (!r.ok) throw new Error('HTTP ' + r.status);
-            return r.json();
-          })
-          .catch(() => null) // null = this city failed, show graceful fallback
+      CITY_COORDS.map(({lat, lon}) =>
+        fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,weathercode`)
+          .then(r => r.json())
+          .catch(() => null)
       )
     );
 
@@ -225,8 +242,7 @@ async function loadAll() {
     weatherResults.forEach((data, i) => {
       const n = i + 1;
 
-      // Guard: wttr.in failed or returned bad data for this city
-      if (!data || !data.current_condition || !data.current_condition.length) {
+      if (!data || !data.current) {
         document.getElementById('wt' + n).innerHTML = '—<span class="w-deg">°C</span>';
         document.getElementById('wco' + n).textContent = 'Unavailable';
         document.getElementById('wh' + n).textContent = '';
@@ -234,14 +250,13 @@ async function loadAll() {
         return;
       }
 
-      const cc = data.current_condition[0];
-      const temp = parseInt(cc.temp_C);
-      const cond = cc.weatherDesc[0].value;
-      const humid = cc.humidity;
+      const temp = Math.round(data.current.temperature_2m);
+      const humid = data.current.relative_humidity_2m;
+      const {desc, emoji} = wmoDesc(data.current.weathercode);
       temps.push({n, temp});
       document.getElementById('wt' + n).innerHTML = temp + '<span class="w-deg">°C</span>';
-      document.getElementById('wco' + n).textContent = cond;
-      document.getElementById('wi' + n).textContent = wi(cond);
+      document.getElementById('wco' + n).textContent = desc;
+      document.getElementById('wi' + n).textContent = emoji;
       document.getElementById('wh' + n).textContent = '💧 ' + humid + '% humidity';
     });
 
