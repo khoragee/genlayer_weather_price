@@ -24,18 +24,19 @@ canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-e
 .st.go{color:#10b981;}.st.err{color:#ef4444;}
 .sec{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#94a3b8;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
 .sec::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,#e2e8f0,transparent);}
-.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px;}
+.price-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px;}
 .pc{background:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.9);border-radius:16px;padding:20px;box-shadow:0 4px 24px rgba(0,0,0,.06);backdrop-filter:blur(12px);transition:transform .2s,box-shadow .2s;position:relative;overflow:hidden;}
 .pc:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.1);}
 .pc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:16px 16px 0 0;}
 .pc.btc::before{background:linear-gradient(90deg,#f7931a,#fbbf24);}
 .pc.eth::before{background:linear-gradient(90deg,#627eea,#818cf8);}
 .pc.sol::before{background:linear-gradient(90deg,#9945ff,#c084fc);}
+.pc.hype::before{background:linear-gradient(90deg,#00c2ff,#0066ff);}
 .pc-orb{position:absolute;width:80px;height:80px;border-radius:50%;top:-20px;right:-20px;opacity:.08;filter:blur(16px);}
-.pc.btc .pc-orb{background:#f7931a;}.pc.eth .pc-orb{background:#627eea;}.pc.sol .pc-orb{background:#9945ff;}
+.pc.btc .pc-orb{background:#f7931a;}.pc.eth .pc-orb{background:#627eea;}.pc.sol .pc-orb{background:#9945ff;}.pc.hype .pc-orb{background:#00c2ff;}
 .p-sym{font-family:'DM Mono',monospace;font-size:10px;color:#94a3b8;margin-bottom:10px;letter-spacing:.08em;}
 .p-val{font-family:'DM Mono',monospace;font-size:28px;font-weight:700;line-height:1;}
-.p-val.btc{color:#d97706;}.p-val.eth{color:#4f46e5;}.p-val.sol{color:#7c3aed;}
+.p-val.btc{color:#d97706;}.p-val.eth{color:#4f46e5;}.p-val.sol{color:#7c3aed;}.p-val.hype{color:#0066ff;}
 .p-change{font-family:'DM Mono',monospace;font-size:11px;margin-top:4px;}
 .p-change.up{color:#10b981;}.p-change.dn{color:#ef4444;}
 .p-name{font-family:'DM Mono',monospace;font-size:10px;color:#cbd5e1;margin-top:3px;}
@@ -82,9 +83,10 @@ footer{border-top:1px solid #e2e8f0;padding-top:20px;display:flex;align-items:ce
     <div class="pc btc"><div class="pc-orb"></div><div class="p-sym">BTC / USD</div><div class="p-val btc" id="btc">—</div><div class="p-change" id="btc-ch"></div><div class="p-name">Bitcoin</div></div>
     <div class="pc eth"><div class="pc-orb"></div><div class="p-sym">ETH / USD</div><div class="p-val eth" id="eth">—</div><div class="p-change" id="eth-ch"></div><div class="p-name">Ethereum</div></div>
     <div class="pc sol"><div class="pc-orb"></div><div class="p-sym">SOL / USD</div><div class="p-val sol" id="sol">—</div><div class="p-change" id="sol-ch"></div><div class="p-name">Solana</div></div>
+    <div class="pc hype"><div class="pc-orb"></div><div class="p-sym">HYPE / USD</div><div class="p-val hype" id="hype">—</div><div class="p-change" id="hype-ch"></div><div class="p-name">Hyperliquid</div></div>
   </div>
 
-  <div class="sec">Live weather · Open-Meteo</div>
+  <div class="sec">Live weather · wttr.in</div>
   <div class="weather-grid">
     <div class="wc" id="wc1"><div class="w-icon-big" id="wi1">🌤</div><div class="city-n" id="cn1">Lagos</div><div class="w-temp" id="wt1">—<span class="w-deg">°C</span></div><div class="w-cond" id="wco1">Loading...</div><div class="w-humid" id="wh1"></div></div>
     <div class="wc" id="wc2"><div class="w-icon-big" id="wi2">🌤</div><div class="city-n" id="cn2">London</div><div class="w-temp" id="wt2">—<span class="w-deg">°C</span></div><div class="w-cond" id="wco2">Loading...</div><div class="w-humid" id="wh2"></div></div>
@@ -173,31 +175,24 @@ async function loadAll() {
   st.textContent = 'Fetching live data...';
 
   try {
-    // Fetch prices from CoinGecko
+    // Fetch prices from CoinGecko (CORS friendly)
     const priceRes = await fetch(
-      'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,solana&order=market_cap_desc&sparkline=false&price_change_percentage=24h'
+      'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,solana,hyperliquid&order=market_cap_desc&sparkline=false&price_change_percentage=24h'
     );
     const prices = await priceRes.json();
-
-    // Guard: CoinGecko returns an error object (not array) when rate-limited
-    if (!Array.isArray(prices) || prices.length === 0) {
-      throw new Error('CoinGecko rate limited — try again in a moment');
-    }
-
     const btcD = prices.find(p => p.id === 'bitcoin');
     const ethD = prices.find(p => p.id === 'ethereum');
     const solD = prices.find(p => p.id === 'solana');
-
-    if (!btcD || !ethD || !solD) {
-      throw new Error('Missing price data from CoinGecko');
-    }
+    const hypeD = prices.find(p => p.id === 'hyperliquid');
 
     document.getElementById('btc').textContent = fmt(btcD.current_price);
     document.getElementById('eth').textContent = fmt(ethD.current_price);
     document.getElementById('sol').textContent = fmt(solD.current_price);
+    if(hypeD) document.getElementById('hype').textContent = fmt(hypeD.current_price);
     setChange('btc-ch', btcD.price_change_percentage_24h);
     setChange('eth-ch', ethD.price_change_percentage_24h);
     setChange('sol-ch', solD.price_change_percentage_24h);
+    if(hypeD) setChange('hype-ch', hypeD.price_change_percentage_24h);
 
     // Trigger
     const btcPrice = btcD.current_price;
@@ -209,67 +204,33 @@ async function loadAll() {
     const dist = TARGET - btcPrice;
     document.getElementById('tdist').textContent = dist > 0 ? fmt(dist) + ' away' : '🎯 Target hit!';
 
-    // City coordinates for Open-Meteo (no CORS, no API key required)
-    const CITY_COORDS = [
-      { lat: 6.5244, lon: 3.3792 },   // Lagos
-      { lat: 51.5074, lon: -0.1278 },  // London
-      { lat: 40.7128, lon: -74.0060 }  // New York
-    ];
-
-    // WMO weather code to description + emoji
-    function wmoDesc(code) {
-      if (code === 0) return { desc: 'Clear sky', emoji: '☀️' };
-      if (code <= 2) return { desc: 'Partly cloudy', emoji: '⛅' };
-      if (code === 3) return { desc: 'Overcast', emoji: '☁️' };
-      if (code <= 49) return { desc: 'Foggy', emoji: '🌫' };
-      if (code <= 59) return { desc: 'Drizzle', emoji: '🌧' };
-      if (code <= 69) return { desc: 'Rain', emoji: '🌧' };
-      if (code <= 79) return { desc: 'Snow', emoji: '❄️' };
-      if (code <= 84) return { desc: 'Rain showers', emoji: '🌧' };
-      if (code <= 94) return { desc: 'Thunderstorm', emoji: '⛈' };
-      return { desc: 'Thunderstorm', emoji: '⛈' };
-    }
-
+    // Fetch weather for each city
     const weatherResults = await Promise.all(
-      CITY_COORDS.map(({lat, lon}) =>
-        fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,weathercode`)
-          .then(r => r.json())
-          .catch(() => null)
+      CITIES.map(city =>
+        fetch(`https://wttr.in/${city}?format=j1`).then(r => r.json())
       )
     );
 
     const temps = [];
     weatherResults.forEach((data, i) => {
       const n = i + 1;
-
-      if (!data || !data.current) {
-        document.getElementById('wt' + n).innerHTML = '—<span class="w-deg">°C</span>';
-        document.getElementById('wco' + n).textContent = 'Unavailable';
-        document.getElementById('wh' + n).textContent = '';
-        temps.push({n, temp: -Infinity});
-        return;
-      }
-
-      const temp = Math.round(data.current.temperature_2m);
-      const humid = data.current.relative_humidity_2m;
-      const {desc, emoji} = wmoDesc(data.current.weathercode);
+      const cc = data.current_condition[0];
+      const temp = parseInt(cc.temp_C);
+      const cond = cc.weatherDesc[0].value;
+      const humid = cc.humidity;
       temps.push({n, temp});
       document.getElementById('wt' + n).innerHTML = temp + '<span class="w-deg">°C</span>';
-      document.getElementById('wco' + n).textContent = desc;
-      document.getElementById('wi' + n).textContent = emoji;
+      document.getElementById('wco' + n).textContent = cond;
+      document.getElementById('wi' + n).textContent = wi(cond);
       document.getElementById('wh' + n).textContent = '💧 ' + humid + '% humidity';
     });
 
-    // Mark hottest city — only among cities with real data
-    const validTemps = temps.filter(t => t.temp !== -Infinity);
-    const hottest = validTemps.length > 0
-      ? validTemps.reduce((a, b) => a.temp > b.temp ? a : b)
-      : null;
-
+    // Mark hottest city
+    const hottest = temps.reduce((a, b) => a.temp > b.temp ? a : b);
     temps.forEach(({n}) => {
       const card = document.getElementById('wc' + n);
       const cityEl = document.getElementById('cn' + n);
-      if (hottest && n === hottest.n) {
+      if(n === hottest.n) {
         card.className = 'wc hot';
         cityEl.innerHTML = CITY_NAMES[n-1] + ' <span class="hot-pill">HOTTEST</span>';
       } else {
